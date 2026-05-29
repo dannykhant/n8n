@@ -1,0 +1,471 @@
+{
+  "name": "Support Ticket Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1dPFfZs5WxnCx2bgI21OJrCPvfftlxj4RK6j8VQzPRww",
+          "mode": "list",
+          "cachedResultName": "Support Ticket (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dPFfZs5WxnCx2bgI21OJrCPvfftlxj4RK6j8VQzPRww/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 749983885,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dPFfZs5WxnCx2bgI21OJrCPvfftlxj4RK6j8VQzPRww/edit#gid=749983885"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0d71a396-d0ab-4b21-826f-93e3bcc62d28",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "FsYOtPDCVg0KJsNz",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "43c3d131-ba2b-4d4e-bdae-02f5f770be3e",
+              "name": "TicketID",
+              "value": "={{ \"TCK-\" + $now.toFormat(\"yyyyLLdd-HHmmss\") }}",
+              "type": "string"
+            },
+            {
+              "id": "5f8ee4f6-7bc1-4ece-aba6-a36e423b5d45",
+              "name": "Ticket Status",
+              "value": "Open",
+              "type": "string"
+            },
+            {
+              "id": "7050708f-1386-45b9-870a-4d07f12e8175",
+              "name": "Created At",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "d6d3080a-092b-43bc-8d18-da2b93c6f173",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1dPFfZs5WxnCx2bgI21OJrCPvfftlxj4RK6j8VQzPRww",
+          "mode": "list",
+          "cachedResultName": "Support Ticket (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dPFfZs5WxnCx2bgI21OJrCPvfftlxj4RK6j8VQzPRww/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 749983885,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1dPFfZs5WxnCx2bgI21OJrCPvfftlxj4RK6j8VQzPRww/edit#gid=749983885"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "TicketID": "={{ $json.TicketID }}",
+            "Ticket Status": "={{ $json['Ticket Status'] }}",
+            "Created At": "={{ $json['Created At'] }}",
+            "Timestamp": "={{ $('Google Sheets Trigger').item.json.Timestamp }}"
+          },
+          "matchingColumns": [
+            "Timestamp"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Ticket Type",
+              "displayName": "Ticket Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "TicketID",
+              "displayName": "TicketID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ticket Status",
+              "displayName": "Ticket Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Created At",
+              "displayName": "Created At",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        0
+      ],
+      "id": "077820cf-40a3-4227-9c42-b170a6f01b54",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "4LoV8magAF3tRmR1",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Google Sheets Trigger').item.json.Email }}",
+        "subject": "={{ $json.TicketID }} - Support Request Received",
+        "emailType": "text",
+        "message": "=Hello, \n\nWe received your request. We will get back to you soon. \n\nHere is your ticket ID: {{ $json.TicketID }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        0
+      ],
+      "id": "35faf5c1-6ac0-4277-9075-7b695534b0aa",
+      "name": "Send a message",
+      "webhookId": "d3fb0eb3-6140-4b50-be66-caa07cd08b82",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hOqlFbcNvD5YNlm5",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Google Sheets Trigger').item.json['Ticket Type'] }}",
+                    "rightValue": "Billing",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "be961d5b-8dcf-436b-bab7-641f804ceb10"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Billing"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "82d4ffc5-09f2-43ee-ace8-686fd8ce2858",
+                    "leftValue": "={{ $('Google Sheets Trigger').item.json['Ticket Type'] }}",
+                    "rightValue": "Technical",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Technical"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "General"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        -16
+      ],
+      "id": "4a9b50e4-5e8c-479d-8383-e27483b1357e",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "chatId": "1556520064",
+        "text": "=New Billing Ticket: {{ $('Update row in sheet').item.json.TicketID }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1088,
+        -192
+      ],
+      "id": "dc3e5fdf-2768-4302-b227-477f0fa8e7df",
+      "name": "Billing",
+      "webhookId": "46a65132-f627-47cc-ba2e-4b90bd4e1014",
+      "credentials": {
+        "telegramApi": {
+          "id": "kXg9z6PyyFuIXan2",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1556520064",
+        "text": "=New Technical Ticket: {{ $('Update row in sheet').item.json.TicketID }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1088,
+        -32
+      ],
+      "id": "9677cc0d-7b9c-4be5-8a15-6aabcdcccda4",
+      "name": "Technical",
+      "webhookId": "25dea17d-6ea4-49c0-8ff5-7aaa0fadb813",
+      "credentials": {
+        "telegramApi": {
+          "id": "kXg9z6PyyFuIXan2",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1556520064",
+        "text": "=New General Ticket: {{ $('Update row in sheet').item.json.TicketID }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1088,
+        128
+      ],
+      "id": "053fb8ab-c4a2-4aee-882c-7c6d2d6ebb35",
+      "name": "General",
+      "webhookId": "0f854fce-e441-433d-8ca5-a6face9f5dee",
+      "credentials": {
+        "telegramApi": {
+          "id": "kXg9z6PyyFuIXan2",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Billing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Technical",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "General",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ed9cbb9c-e621-4209-a9bb-80c05095f10a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "67806d696706b108afab5b4d3c2e4b0df34958d611ee55d9212f53c9d2d48b25"
+  },
+  "id": "QjnkENS2QbspBPZ7",
+  "tags": []
+}
